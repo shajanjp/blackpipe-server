@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BlackPipe</title>
+  <style>
+    body{
+      background: black;
+      color: white;
+    }
+    pre#output{
+      background: black;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Black Pipe</h1>
+  <h4>Session ID : <%= sessionId %></h4>
+  <pre id="output"></pre>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <script>
+    let sessionId = '<%= sessionId %>';
+    const socket = io.connect('');
+
+    socket.on('connect', function(){
+      console.log('connected');
+      console.log('sessionId', sessionId);
+    });
+
+    socket.on(sessionId, (data) => {
+      // console.log('data', data.chunk);
+      output.innerHTML += data.chunk;
+    });
+  </script>
+</body>
+</html>
+
+
