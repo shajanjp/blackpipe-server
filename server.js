@@ -4,6 +4,7 @@ let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
 let PORT = process.env.PORT || 3000;
+let HOSTNAME = process.env.HOSTNAME || `http://localhost:${PORT}`;
 let sessionController = require('./controllers/session-controller.js');
 
 app.set('view engine', 'ejs');
@@ -25,5 +26,5 @@ io.on('connection', (client) => {
 })
 
 http.listen(PORT, () => {
-  console.log(`Server started at: http://localhost:${PORT}`);
+  console.log(`Server started at: ${ HOSTNAME }`);
 });
