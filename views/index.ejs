@@ -3,25 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <title>BlackPipe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
   <style>
     body{
       background: black;
       color: white;
     }
     pre#output{
+      margin: 0px;
       background: black;
       color: white;
+      height: 75vh;
+      overflow: auto;
+      border-radius: 0px;
+      padding: 10px 10px !important;
+      border: 1px solid #555;
+    }
+    .sidebar-menu{
+      border-radius: 0px !important;
+    }
+    .session-details{
+     margin-top: 0px !important; 
     }
   </style>
 </head>
 <body>
-  <h1>Black Pipe</h1>
-  <h4>Session ID : <%= sessionId %></h4>
-  <pre id="output"></pre>
+
+
+  <div class="ui container">
+    <br>
+    <h1 class="ui header grey main-heading">Black Pipe</h1>
+    <h4 class="ui header grey session-details">Session ID : <%= sessionId %></h4>
+    <!-- <div class="sub header">Session ID : <%= sessionId %></div> -->
+
+    <div class="ui stackable grid">
+
+      <div class="three wide column">
+        <div class="ui inverted vertical fluid menu sidebar-menu">
+          <div class="item">
+            <div class="header">Filter</div>
+            <div class="menu">
+              <a class="item">Debug</a>
+              <a class="item">Info</a>
+              <a class="item">Warning</a>
+              <a class="item">Error</a>
+              <a class="item">Critical</a>
+            </div>
+          </div>
+          <div class="item">
+            <div class="header">Settings</div>
+            <div class="menu">
+              <a class="item" id="action-clear">Clear</a>
+            </div>
+          </div>
+        </div> <!-- menu -->
+      </div> <!-- column -->
+
+      <div class="thirteen wide column">
+        <pre id="output"></pre>   
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   <script>
     let sessionId = '<%= sessionId %>';
     const socket = io.connect('');
+    const outputContainer = document.getElementById("output");
+    const clearAction = document.getElementById("action-clear");
+
+    clearAction.onclick = () => {
+      outputContainer.innerHTML = '';
+
+    }
 
     socket.on('connect', function(){
       console.log('connected');
@@ -29,8 +83,9 @@
     });
 
     socket.on(sessionId, (data) => {
-      // console.log('data', data.chunk);
-      output.innerHTML += data.chunk;
+      let textnode = document.createTextNode(data.chunk);
+      outputContainer.appendChild(textnode);
+      outputContainer.scrollTop = outputContainer.scrollHeight;
     });
   </script>
 </body>
