@@ -66,7 +66,7 @@
       </div> <!-- column -->
 
       <div class="thirteen wide column">
-        <pre id="output"></pre>   
+        <pre id="output"></pre>
       </div>
     </div>
   </div>
@@ -77,9 +77,21 @@
     const socket = io.connect('');
     const outputContainer = document.getElementById("output");
     const clearAction = document.getElementById("action-clear");
+    const autoScrollSwitch = document.getElementById("action-autoscroll");
+    let autoScrollEnabled = true;
 
     clearAction.onclick = () => {
       outputContainer.innerHTML = '';
+    }
+
+    autoScrollSwitch.onclick = (element) => {
+      if(element.target.className.split(' ').indexOf('active') !== -1){
+        autoScrollEnabled = false;
+        alterClass(element.target, 'active', false);
+      } else {
+        autoScrollEnabled = true;
+        alterClass(element.target, 'active', true);
+      }
     }
 
     let filterItems = document.getElementById('filter-attributes');
@@ -117,7 +129,9 @@
     socket.on(sessionId, (data) => {
       let textnode = document.createTextNode(data.chunk);
       outputContainer.appendChild(textnode);
-      outputContainer.scrollTop = outputContainer.scrollHeight;
+      if(autoScrollEnabled){
+        outputContainer.scrollTop = outputContainer.scrollHeight;
+      }
     });
   </script>
 </body>
