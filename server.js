@@ -9,6 +9,8 @@ let sessionController = require('./controllers/session-controller.js');
 
 app.set('view engine', 'ejs');
 
+app.use('/assets', express.static('public'))
+
 app.get('/view/:sessionId', sessionController.viewHandler);
 
 app.param('sessionId', sessionController.validateSession);
