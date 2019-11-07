@@ -1,0 +1,26 @@
+ body{
+  background: black;
+  color: white;
+}
+pre#output{
+  margin: 0px;
+  background: black;
+  color: white;
+  height: 75vh;
+  overflow: auto;
+  border-radius: 0px;
+  padding: 10px 10px !important;
+  border: 1px solid #555;
+}
+.sidebar-menu{
+  border-radius: 0px !important;
+}
+.main-heading{
+  padding-top: 20px !important;
+}
+#blackpipe-app .item.active{
+  color: #00adb5 !important;
+}
+.session-details{
+ margin-top: 0px !important; 
+}
