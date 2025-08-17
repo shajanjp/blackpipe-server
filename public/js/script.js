@@ -1,4 +1,4 @@
-const socket = io.connect('');
+const socket = io.connect(window.location.origin);
 const outputContainer = document.getElementById("output");
 const clearAction = document.getElementById("action-clear");
 const autoScrollSwitch = document.getElementById("action-autoscroll");
@@ -42,6 +42,7 @@ filterItems.onclick = (item) => {
     alterClass(item.target, 'active', false);
     item.target.setAttribute('data-enabled', "0");
   }
+  
   console.log('item', item);
 }
 
@@ -52,7 +53,9 @@ socket.on('connect', function(){
 
 socket.on(sessionId, (data) => {
   let textnode = document.createTextNode(data.chunk);
+  
   outputContainer.appendChild(textnode);
+  
   if(autoScrollEnabled){
     outputContainer.scrollTop = outputContainer.scrollHeight;
   }
